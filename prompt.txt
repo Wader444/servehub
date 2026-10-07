@@ -1,0 +1,872 @@
+# MASTER PROMPT — COMMUNITY SERVICE MANAGEMENT PORTAL
+
+## ROLE
+
+Act as a Senior Full-Stack Developer and Software Architect helping a 3rd-year IT student build a practical, polished academic project under a strict deadline.
+
+The goal is NOT to build an enterprise application.
+
+The goal is to build a project that is:
+
+* Simple enough to complete within a short deadline
+* Easy to understand and explain in a viva
+* Professionally designed
+* Properly structured
+* More impressive than a basic CRUD project
+* Easy to run locally
+* Easy to deploy
+
+The project is:
+
+# COMMUNITY SERVICE MANAGEMENT PORTAL
+
+A web application where users can discover community services and events, request services, volunteer for activities, and track their participation.
+
+---
+
+# DEVELOPER BACKGROUND
+
+The developer:
+
+* Is a 3rd-year IT student.
+* Has strong MySQL knowledge.
+* Understands HTML, CSS and JavaScript.
+* Is learning full-stack development.
+* Has limited time before project submission.
+
+Therefore:
+
+DO NOT over-engineer.
+
+DO NOT use microservices.
+
+DO NOT use unnecessary AI.
+
+DO NOT introduce complicated infrastructure.
+
+Prefer simple, understandable implementations.
+
+---
+
+# TECH STACK
+
+Use:
+
+## Frontend
+
+* React
+* Vite
+* React Router
+* Tailwind CSS
+* Axios
+* Recharts
+
+## Backend
+
+* Node.js
+* Express.js
+
+## Database
+
+* MySQL 8
+
+## Authentication
+
+* JWT
+* bcrypt
+
+## Development
+
+* VS Code
+* Git
+* GitHub
+* Postman
+
+Do NOT introduce:
+
+* Microservices
+* Docker unless specifically needed
+* Redis
+* Kafka
+* GraphQL
+* Kubernetes
+* Complex cloud infrastructure
+
+---
+
+# ARCHITECTURE
+
+Use a simple 3-layer architecture:
+
+React Frontend
+↓
+Express REST API
+↓
+MySQL Database
+
+Backend:
+
+Routes
+↓
+Controllers
+↓
+Database Queries
+
+Keep business logic simple and readable.
+
+---
+
+# USER ROLES
+
+Implement only THREE roles.
+
+## 1. USER
+
+Can:
+
+* Register
+* Login
+* View profile
+* Browse community services
+* Search/filter services
+* Submit service requests
+* View request status
+* Browse community events
+* Register for events
+* View notifications
+
+---
+
+## 2. VOLUNTEER
+
+Can:
+
+* Login
+* Create volunteer profile
+* Browse volunteer opportunities
+* Apply for opportunities
+* View application status
+* View completed activities
+* View volunteer hours
+
+A volunteer is still a user but has additional volunteer functionality.
+
+---
+
+## 3. ADMIN
+
+Can:
+
+* Login
+* View dashboard
+* Manage users
+* Create services
+* Update services
+* Delete services
+* Create events
+* Update events
+* Delete events
+* View service requests
+* Update request status
+* Approve/reject volunteer applications
+* View basic analytics
+
+---
+
+# CORE FEATURES
+
+Focus ONLY on these modules.
+
+## MODULE 1 — Authentication
+
+Implement:
+
+* Register
+* Login
+* Logout
+* JWT authentication
+* Password hashing
+* Protected routes
+* Role-based access
+
+Never store plaintext passwords.
+
+---
+
+# MODULE 2 — COMMUNITY SERVICES
+
+Admin can create:
+
+* Service title
+* Description
+* Category
+* Location
+* Date
+* Maximum participants
+* Status
+
+Example categories:
+
+* Education
+* Healthcare
+* Environment
+* Food Distribution
+* Elderly Care
+* Animal Welfare
+* Disaster Relief
+
+Users can:
+
+* Browse services
+* Search services
+* Filter by category
+* View service details
+* Request a service
+
+---
+
+# MODULE 3 — SERVICE REQUESTS
+
+A user can request a service.
+
+Request statuses:
+
+PENDING
+↓
+APPROVED
+↓
+COMPLETED
+
+Alternative:
+
+PENDING → REJECTED
+
+Admin can update the status.
+
+Users can see their request history.
+
+Display status using badges.
+
+Example:
+
+PENDING   → Yellow
+APPROVED  → Blue
+COMPLETED → Green
+REJECTED  → Red
+
+---
+
+# MODULE 4 — VOLUNTEER OPPORTUNITIES
+
+Admin can create volunteer opportunities.
+
+Fields:
+
+* title
+* description
+* category
+* location
+* date
+* required volunteers
+* available slots
+
+Volunteer can:
+
+* Browse opportunities
+* View details
+* Apply
+
+Admin can:
+
+* Approve application
+* Reject application
+
+Prevent duplicate applications.
+
+---
+
+# MODULE 5 — VOLUNTEER HOURS
+
+After a volunteer completes an activity, admin can record:
+
+* Volunteer
+* Event
+* Hours
+
+Volunteer dashboard displays:
+
+Total Volunteer Hours
+
+Completed Activities
+
+Upcoming Opportunities
+
+This creates a strong visual feature without requiring complicated architecture.
+
+---
+
+# MODULE 6 — EVENTS
+
+Admin can create community events.
+
+Fields:
+
+* title
+* description
+* location
+* date
+* time
+* capacity
+
+Users/volunteers can register.
+
+Rules:
+
+* Cannot register twice.
+* Cannot register if event is full.
+* Cannot register after event date.
+
+Display:
+
+Registered
+
+or
+
+Register Now
+
+---
+
+# MODULE 7 — DASHBOARDS
+
+## USER DASHBOARD
+
+Show:
+
+* Active requests
+* Completed requests
+* Upcoming events
+* Recent activity
+
+---
+
+## VOLUNTEER DASHBOARD
+
+Show:
+
+* Applications
+* Approved opportunities
+* Completed activities
+* Total volunteer hours
+
+Add one simple chart showing volunteer activity.
+
+---
+
+## ADMIN DASHBOARD
+
+Show:
+
+* Total users
+* Total volunteers
+* Total services
+* Total events
+* Pending requests
+* Completed requests
+
+Add simple charts:
+
+1. Requests by status
+2. Services by category
+3. Volunteer participation
+
+Use Recharts.
+
+---
+
+# MODULE 8 — SEARCH AND FILTERING
+
+Implement simple backend filtering.
+
+Services:
+
+GET /api/services?category=Education
+
+Events:
+
+GET /api/events?category=Environment
+
+Also support:
+
+* Search by title
+* Filter by category
+* Filter by location
+
+Do not build an advanced search engine.
+
+---
+
+# DATABASE
+
+Use MySQL.
+
+Keep the schema small.
+
+Use approximately these tables:
+
+users
+
+categories
+
+services
+
+service_requests
+
+events
+
+event_registrations
+
+volunteer_profiles
+
+volunteer_applications
+
+volunteer_hours
+
+notifications
+
+Do NOT create unnecessary tables.
+
+---
+
+# DATABASE RELATIONSHIPS
+
+users
+│
+├──── service_requests
+│
+├──── event_registrations
+│
+├──── volunteer_profiles
+│
+├──── volunteer_applications
+│
+└──── notifications
+
+categories
+│
+└──── services
+
+services
+│
+└──── service_requests
+
+events
+│
+├──── event_registrations
+│
+└──── volunteer_applications
+
+users
+│
+└──── volunteer_hours
+
+---
+
+# API STRUCTURE
+
+Authentication:
+
+POST /api/auth/register
+POST /api/auth/login
+
+Users:
+
+GET /api/users/me
+PUT /api/users/me
+
+Services:
+
+GET /api/services
+GET /api/services/:id
+POST /api/services
+PUT /api/services/:id
+DELETE /api/services/:id
+
+Requests:
+
+POST /api/services/:id/request
+GET /api/requests/my
+PATCH /api/requests/:id/status
+
+Events:
+
+GET /api/events
+GET /api/events/:id
+POST /api/events
+PUT /api/events/:id
+DELETE /api/events/:id
+POST /api/events/:id/register
+
+Volunteer:
+
+GET /api/volunteer/opportunities
+POST /api/volunteer/apply
+GET /api/volunteer/applications
+PATCH /api/volunteer/applications/:id
+
+Volunteer Hours:
+
+GET /api/volunteer/hours
+POST /api/volunteer/hours
+
+Admin:
+
+GET /api/admin/dashboard
+GET /api/admin/users
+
+---
+
+# FRONTEND PAGES
+
+Keep the number of pages limited.
+
+Public:
+
+/
+/login
+/register
+/services
+/services/:id
+/events
+/events/:id
+
+Authenticated:
+
+/dashboard
+/profile
+/my-requests
+/my-events
+/notifications
+
+Volunteer:
+
+/volunteer
+/volunteer/opportunities
+/volunteer/applications
+/volunteer/hours
+
+Admin:
+
+/admin
+/admin/users
+/admin/services
+/admin/events
+/admin/requests
+/admin/volunteers
+
+---
+
+# UI DESIGN
+
+Create a modern but simple UI.
+
+Design characteristics:
+
+* Clean dashboard
+* Responsive
+* Cards
+* Tables
+* Search bars
+* Filters
+* Status badges
+* Modal forms
+* Toast messages
+* Loading states
+* Empty states
+
+Use a consistent design system.
+
+Avoid excessive animations.
+
+Avoid overly complicated graphics.
+
+---
+
+# LANDING PAGE
+
+Create:
+
+Hero:
+
+"Serve Your Community. Create an Impact."
+
+Subtitle explaining the platform.
+
+Buttons:
+
+"Explore Services"
+
+"Become a Volunteer"
+
+Then show:
+
+How It Works
+
+1. Find
+2. Participate
+3. Make an Impact
+
+Then:
+
+Community Services
+
+Volunteer Opportunities
+
+Impact Statistics
+
+CTA
+
+Footer
+
+---
+
+# SIMPLE IMPACT STATISTICS
+
+Display database-driven statistics:
+
+Total Volunteers
+
+Community Services
+
+Events Conducted
+
+Volunteer Hours
+
+Do not hardcode statistics in the dashboard.
+
+---
+
+# ONE STANDOUT FEATURE
+
+Implement a simple:
+
+## COMMUNITY IMPACT SCORE
+
+For volunteers:
+
+Impact Score =
+completed activities × 10
++
+volunteer hours × 2
+
+Example:
+
+Completed Activities = 5
+Volunteer Hours = 12
+
+Score:
+
+5 × 10 + 12 × 2 = 74
+
+Display:
+
+🏆 Impact Score: 74
+
+This is intentionally rule-based.
+
+Do NOT build an AI recommendation engine.
+
+---
+
+# SECURITY
+
+Implement basic security:
+
+* bcrypt password hashing
+* JWT authentication
+* Protected routes
+* Role-based middleware
+* Input validation
+* Parameterized SQL queries
+* CORS
+* Helmet
+* Environment variables
+
+Do not store secrets in source code.
+
+---
+
+# DATABASE RULES
+
+Use:
+
+* Primary keys
+* Foreign keys
+* Unique constraints
+* NOT NULL
+* timestamps
+* indexes where useful
+
+Use transactions for event registration.
+
+For event registration:
+
+1. Check event exists.
+2. Check capacity.
+3. Check duplicate registration.
+4. Insert registration.
+5. Update available slots.
+6. Commit.
+
+Rollback if something fails.
+
+---
+
+# PROJECT STRUCTURE
+
+Use:
+
+frontend/
+
+src/
+├── components/
+├── pages/
+├── layouts/
+├── services/
+├── hooks/
+├── context/
+└── utils/
+
+backend/
+
+src/
+├── config/
+├── routes/
+├── controllers/
+├── middleware/
+├── services/
+├── utils/
+└── db/
+
+---
+
+# DEVELOPMENT STRATEGY
+
+Build in this exact order.
+
+PHASE 1:
+Project setup
+
+PHASE 2:
+MySQL database
+
+PHASE 3:
+Authentication
+
+PHASE 4:
+Services
+
+PHASE 5:
+Service requests
+
+PHASE 6:
+Events
+
+PHASE 7:
+Volunteer management
+
+PHASE 8:
+Dashboards
+
+PHASE 9:
+Impact score
+
+PHASE 10:
+UI polish
+
+PHASE 11:
+Testing
+
+PHASE 12:
+Deployment
+
+---
+
+# IMPORTANT DEADLINE RULE
+
+Prioritize a working application over additional features.
+
+If time becomes limited, the priority is:
+
+1. Authentication
+2. Database
+3. Services
+4. Service requests
+5. Events
+6. Volunteer applications
+7. Dashboards
+8. UI polish
+
+Features such as:
+
+* notifications
+* charts
+* impact score
+
+can be implemented after the core system works.
+
+---
+
+# ANTIGRAVITY WORKFLOW
+
+DO NOT generate the entire application at once.
+
+Before coding, produce:
+
+1. Architecture
+2. ER diagram
+3. Database schema
+4. API list
+5. Folder structure
+6. Development phases
+
+Then implement one phase at a time.
+
+For every phase:
+
+1. Explain what will be built.
+2. Create the required files.
+3. Implement the feature.
+4. Run/test it.
+5. Fix errors.
+6. Only then proceed to the next phase.
+
+Never move to the next phase while the current phase has obvious errors.
+
+---
+
+# FINAL GOAL
+
+The final application should look like a polished community-service platform while remaining simple enough for a 3rd-year student to fully understand and explain.
+
+The most important qualities are:
+
+WORKING FEATURES
++
+GOOD DATABASE DESIGN
++
+CLEAN UI
++
+SECURE AUTHENTICATION
++
+CLEAR ARCHITECTURE
+
+Start by generating only:
+
+1. High-level architecture
+2. ER diagram
+3. Database schema
+4. API list
+5. Folder structure
+6. Development roadmap
+
+Do not generate application code yet.
