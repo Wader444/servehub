@@ -3,12 +3,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const buildPoolConfig = () => {
-  const dbUrl = process.env.DATABASE_URL || process.env.MYSQL_URL;
-  const isCloudHost = process.env.DB_HOST && !['localhost', '127.0.0.1'].includes(process.env.DB_HOST);
-  const requiresSsl = process.env.DB_SSL === 'true' || process.env.DB_SSL === '1' || (isCloudHost && process.env.DB_SSL !== 'false');
+const clean = (val) => (val ? String(val).replace(/^["']|["']$/g, '').trim() : '');
 
-  const sslOption = requiresSsl ? { rejectUnauthorized: false } : undefined;
+const buildPoolConfig = () => {
+  const dbUrl = clean(process.env.DATABASE_URL || process.env.MYSQL_URL);
+  const dbHost = clean(process.env.DB_HOST) || 'localhost';
+  const isCloudHost = dbHost && !['localhost', '127.0.0.1'].includes(dbHost);
+  const requiresSsl = clean(process.env.DB_SSL) === 'true' || clean(process.env.DB_SSL) === '1' || (isCloudHost && clean(process.env.DB_SSL) !== 'false');
+
+  const sslOption = requiresSsl ? { minVersion: 'TLSv1.2', rejectUnauthorized: false } : undefined;
 
   if (dbUrl) {
     try {
@@ -22,7 +25,9 @@ const buildPoolConfig = () => {
         ssl: sslOption,
         waitForConnections: true,
         connectionLimit: 10,
-        queueLimit: 0
+        queueLimit: 0,
+        connectTimeout: 20000,
+        enableKeepAlive: true
       };
     } catch {
       return {
@@ -30,21 +35,25 @@ const buildPoolConfig = () => {
         ssl: sslOption,
         waitForConnections: true,
         connectionLimit: 10,
-        queueLimit: 0
+        queueLimit: 0,
+        connectTimeout: 20000,
+        enableKeepAlive: true
       };
     }
   }
 
   return {
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'community_portal_db',
-    port: Number(process.env.DB_PORT) || 3306,
+    host: dbHost,
+    user: clean(process.env.DB_USER) || 'root',
+    password: clean(process.env.DB_PASSWORD) || '',
+    database: clean(process.env.DB_NAME) || 'community_portal_db',
+    port: Number(clean(process.env.DB_PORT)) || 3306,
     ssl: sslOption,
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    connectTimeout: 20000,
+    enableKeepAlive: true
   };
 };
 

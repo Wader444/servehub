@@ -98,5 +98,13 @@ app.listen(PORT, async () => {
   console.log(`====================================================`);
   console.log(`🚀 ServeHub Backend running at http://localhost:${PORT}`);
   console.log(`====================================================`);
-  await testConnection();
+  const isConnected = await testConnection();
+  if (isConnected) {
+    try {
+      const { initializeDatabase } = await import('./db/initDb.js');
+      await initializeDatabase();
+    } catch (initErr) {
+      console.warn(`[Auto-Init DB Note] ${initErr.message}`);
+    }
+  }
 });
